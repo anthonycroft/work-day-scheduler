@@ -19,7 +19,7 @@
       href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./" />
+    <link rel="stylesheet" href="./assets/CSS/style.css" />
     <title>Work Day Scheduler</title>
   </head>
 
@@ -30,40 +30,77 @@
       <p id="currentDay" class="lead"></p>
       <h2>Current Time &amp; Date: <br /> <span id="time-display">00:00:00</span></h2>
     </header>
+    <section class="text-center notification" id="notify">
+      Appointment added to <code>localstorage</code>
+    </section>
     <div class="container">
       <!-- Timeblocks go here -->
-
-      <!-- <input type="text" class=""> -->
-      <form class="form">
-        <div class="form-group row">
-          <label for="exampleFormControlTextarea1" class="hour col-2 pt-4">12:00 AM</label>
-          <div class="col-10 future">
-            <!-- <input type="textarea" class="form-control" id="inputPassword" placeholder="Password"> -->
-            <textarea class="form-control h-100" id="exampleFormControlTextarea1"></textarea>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="exampleFormControlTextarea1" class="hour col-2 pt-4">12:00 AM</label>
-          <div class="col-10 future">
-            <!-- <input type="textarea" class="form-control" id="inputPassword" placeholder="Password"> -->
-            <textarea class="form-control h-100" id="exampleFormControlTextarea1"></textarea>
-          </div>
-        </div>
-      </form>
-        <!-- <label for="exampleFormControlTextarea1">Example textarea</label> -->
-        <!-- <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea> -->
-
-        <!-- <label for="exampleFormControlTextarea1">Example textarea</label> -->
-        <!-- <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea> -->
-
-        <!-- <label for="exampleFormControlTextarea1">Example textarea</label> -->
-        <!-- <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea> -->
-
-        <!-- <label for="exampleFormControlTextarea1">Example textarea</label> -->
-        <!-- <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea> -->
-      
+      <section id="hour-9" class="row time-block">
+        <section class="col-md-1 hour">
+          9AM
+        </section>
+        <textarea class="col-md-10 description"></textarea>
+        <button class="btn saveBtn col-md-1"><i class="fas fa-save"></i></button>
+      </section>
+      <section id="hour-10" class="row time-block">
+        <section class="col-md-1 hour">
+          10AM
+        </section>
+        <textarea class="col-md-10 description"></textarea>
+        <button class="btn saveBtn col-md-1"><i class="fas fa-save"></i></button>
+      </section>   
+      <section id="hour-11" class="row time-block">
+        <section class="col-md-1 hour">
+          11AM
+        </section>
+        <textarea class="col-md-10 description"></textarea>
+        <button class="btn saveBtn col-md-1"><i class="fas fa-save"></i></button>
+      </section>   
+      <section id="hour-12" class="row time-block">
+        <section class="col-md-1 hour">
+          12AM
+        </section>
+        <textarea class="col-md-10 description"></textarea>
+        <button class="btn saveBtn col-md-1"><i class="fas fa-save"></i></button>
+      </section>   
+      <section id="hour-13" class="row time-block">
+        <section class="col-md-1 hour">
+          1PM
+        </section>
+        <textarea class="col-md-10 description"></textarea>
+        <button class="btn saveBtn col-md-1"><i class="fas fa-save"></i></button>
+      </section>   
+      <section id="hour-14" class="row time-block">
+        <section class="col-md-1 hour">
+          2PM
+        </section>
+        <textarea class="col-md-10 description"></textarea>
+        <button class="btn saveBtn col-md-1"><i class="fas fa-save"></i></button>
+      </section>
+      <section id="hour-15" class="row time-block">
+        <section class="col-md-1 hour">
+          3PM
+        </section>
+        <textarea class="col-md-10 description"></textarea>
+        <button class="btn saveBtn col-md-1"><i class="fas fa-save"></i></button>
+      </section>   
+      <section id="hour-16" class="row time-block">
+        <section class="col-md-1 hour">
+          4PM
+        </section>
+        <textarea class="col-md-10 description"></textarea>
+        <button class="btn saveBtn col-md-1"><i class="fas fa-save"></i></button>
+      </section>   
+      <section id="hour-17" class="row time-block">
+        <section class="col-md-1 hour">
+          5PM
+        </section>
+        <textarea class="col-md-10 description"></textarea>
+        <button class="btn saveBtn col-md-1"><i class="fas fa-save"></i></button>
+      </section>   
 
     </div>
+        
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
