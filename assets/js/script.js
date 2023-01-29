@@ -1,3 +1,5 @@
+var displayDate;
+
 $(document).ready( function(){
   var parentId;
   var taskEl;
@@ -69,6 +71,7 @@ $(document).ready( function(){
   // listen for Save button clicks
   $('.saveBtn').click ( function(event) {
     var button;
+    var displayDate;
 
     // get button clicked (user may have clicked the icon - so we need to get parent 
     // object in that case)
@@ -87,17 +90,14 @@ $(document).ready( function(){
     parentId = $(button).parent().attr('id');
     
     // get date and time
-    var date = moment().format('YYYY-MM-DD');
-    var hour = getHourFromId(parentId).concat(":00");
 
-    // format the object ready for storing
-    var task = {
-      date: moment(date + ' ' + hour),
-      event: taskDesc
-    }
+    var hour = getHourFromId(parentId);
+    
+    // format date for storage format (YYYY-MM-DD)
+    scheduleDate = moment($('#time-display').text()).format('YYYY-MM-DD');
 
       // save to local storage
-    addTaskToLocalStorage(task);
+    saveTask(scheduleDate, hour, taskDesc);
 
   })
 
@@ -131,27 +131,34 @@ $(document).ready( function(){
     }
   }
 
-  function addTaskToLocalStorage(task) {  
-    // save event to local storage
+    // Function to save a task
+  function saveTask(date, hour, taskDescription) {
+    // Retrieve the calendar tasks from local storage
+    var calendarTasks = JSON.parse(localStorage.getItem('calendarTasks')) || {};
 
-    if (typeof(Storage) == "undefined") {
-      console.log("Sorry, your browser does not support web storage...");
-      return
+    // Check if the date exists in the calendar tasks
+    if (!calendarTasks[date]) {
+      calendarTasks[date] = [];
     }
 
-    // get the list of tasks from local storage
-    tasks = JSON.parse(localStorage.getItem('tasks'));
-
-    // do a null check
-    if (tasks === null) {
-      var tasks = [];
+    // Check if the task already exists for the date
+    var taskExists = false;
+    for (var i = 0; i < calendarTasks[date].length; i++) {
+      if (calendarTasks[date][i].hour === hour) {
+        // Update the task
+        calendarTasks[date][i].task = taskDescription;
+        taskExists = true;
+        break;
+      }
     }
 
-    // save the task(s) to local storage
-    tasks.push(task);
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    // If the task does not already exist, add it
+    if (!taskExists) {
+      calendarTasks[date].push({ hour: hour, task: taskDescription });
+    }
 
-    return;
+    // Store the updated calendar tasks in local storage
+    localStorage.setItem('calendarTasks', JSON.stringify(calendarTasks));
   }
 
   function colorTimeBlocks() {
@@ -161,10 +168,6 @@ $(document).ready( function(){
   
     var currentHour = moment().hour();
   
-    // const timeBlockIds = $('.time-block').map(function() {
-    //   return this.id;
-    // }).get();
-  
     var timeBlockEls = $(".container").find(".row.time-block").get();
   
     // iterate over all the time-blocks setting the background appropriately
@@ -172,7 +175,7 @@ $(document).ready( function(){
       // get the hour of this time-block
       var el = $(timeBlockEls[i]);
       var id = el.attr('id');
-      var hour = getHourFromId(id)
+      var hour = getHourFromId(id);
   
       if (hour == currentHour ) {
         $(el).addClass('present');
@@ -189,12 +192,12 @@ $(document).ready( function(){
   var timeDisplayEl = $('#time-display');
 
   // handle displaying the time
-  function displayTime() {
-    var rightNow = moment().format('DD MMM YYYY');
-    timeDisplayEl.text(rightNow);
+  function displayDate() {
+    var date = moment().format('DD MMM YYYY');
+    $(timeDisplayEl).text(date);
   }
 
-  setInterval(displayTime, 1000);
+  setInterval(displayDate, 1000);
   setInterval(colorTimeBlocks, 1000);
 
   init();
