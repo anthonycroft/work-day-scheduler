@@ -13,40 +13,41 @@ $(document).ready( function(){
     }
 
     // get the list of tasks from local storage
-    tasks = JSON.parse(localStorage.getItem('tasks'));
+    var CurrentDayTasks = JSON.parse(localStorage.getItem('calendarTasks'));
 
     // do a null check
-    if (tasks === null) {
+    if (CurrentDayTasks === null) {
       return
     }
 
-    updateSchedule(tasks);
+    //clearSchedule();
+    displayTasksForCurrentDay();
     colorTimeBlocks();
 
     return;
 
   }
 
-  function updateSchedule(tasks) {
-    // display the tasks in the relevant time block
+  // function updateSchedule(tasks) {
+  //   // display the tasks in the relevant time block
 
-    for ( let i = 0; i < tasks.length; i++ ) {
-      var date;
-      var hour;
-      var taskDesc;
+  //   for ( let i = 0; i < tasks.length; i++ ) {
+  //     var date;
+  //     var hour;
+  //     var taskDesc;
 
-      // get the 2-digit formatted time
-      date = tasks[i].date;
-      hour = moment(date).format('H');
+  //     // get the 2-digit formatted time
+  //     date = tasks[i].date;
+  //     hour = moment(date).format('H');
 
-      // get the task description
-      taskDesc = tasks[i].event;
+  //     // get the task description
+  //     taskDesc = tasks[i].event;
 
-      // call function to display task
-      printTask(hour, taskDesc);
-    }
+  //     // call function to display task
+  //     printTask(hour, taskDesc);
+  //   }
 
-  }
+  // }
 
   function printTask(hour, taskDesc) { 
     // display task by traversing the DOM 
@@ -69,9 +70,8 @@ $(document).ready( function(){
 
   
   // listen for Save button clicks
-  $('.saveBtn').click ( function(event) {
+  $('.saveBtn').click( function(event) {
     var button;
-    var displayDate;
 
     // get button clicked (user may have clicked the icon - so we need to get parent 
     // object in that case)
@@ -94,7 +94,7 @@ $(document).ready( function(){
     var hour = getHourFromId(parentId);
     
     // format date for storage format (YYYY-MM-DD)
-    scheduleDate = moment($('#time-display').text()).format('YYYY-MM-DD');
+    var scheduleDate = moment($('#time-display').text()).format('YYYY-MM-DD');
 
       // save to local storage
     saveTask(scheduleDate, hour, taskDesc);
@@ -103,11 +103,26 @@ $(document).ready( function(){
 
   $('.move').click(function(event) {
     var elementId = $(event.target).attr("id");
-    
-    if (elementId = 'previous') {
-      // load previous day's schedule
 
+    var scheduleDate = $('#time-display').text();
+    
+    if (elementId == 'previous') {
+
+      // update schedule date to previous week day
+      displayDate(moment(addWeekdays(scheduleDate, -1)).format('DD MMM YYYY'));
+
+    } else {
+
+      // update schedule date to next week day
+      displayDate(moment(addWeekdays(scheduleDate, 1)).format('DD MMM YYYY'));
+      
     }
+
+    // clear schedule
+    clearSchedule();
+
+    // display tasks for resolved date
+    displayTasksForCurrentDay();
 
   });
 
@@ -159,6 +174,59 @@ $(document).ready( function(){
 
     // Store the updated calendar tasks in local storage
     localStorage.setItem('calendarTasks', JSON.stringify(calendarTasks));
+
+    var $()
+  }
+
+  function clearSchedule() {
+    console.log("we are in clearSchedule")
+    $('.description').val('');
+  }
+
+    // Function to retrieve and display the tasks for the current day
+  function displayTasksForCurrentDay() {
+    // Retrieve the calendar tasks from local storage
+    var calendarTasks = JSON.parse(localStorage.getItem('calendarTasks')) || {};
+
+    // format schedule date to search for key in calendarTasks
+    
+    if (isValidDate($('#time-display').text())) {
+      scheduleDate = moment($('#time-display').text()).format('YYYY-MM-DD')
+    } else {
+      scheduleDate = moment().format('YYYY-MM-DD')
+    }
+  
+    // Check if the current date exists in the calendar tasks
+    if (calendarTasks[scheduleDate]) {
+      // Loop through the tasks for the current date
+      for (var i = 0; i < calendarTasks[scheduleDate].length; i++) {
+        var task = calendarTasks[scheduleDate][i];
+
+        // Update schedule
+        printTask(task.hour, task.task);
+
+      }
+    }
+  }
+  
+  // Function to add or subtract a specified number of weekdays to/from the current date
+  function addWeekdays(date, weekdays) {
+    var date = moment(date);
+    var daysToAdd = weekdays;
+
+    while (daysToAdd !== 0) {
+      date = date.add(daysToAdd > 0 ? 1 : -1, 'days');
+      if ((date.day() !== 0 && date.day() !== 6)) {
+        daysToAdd -= daysToAdd > 0 ? 1 : -1;
+      }
+    }
+
+    return date;
+  }
+
+  function isValidDate(dateString) {
+    var date = new Date(dateString);
+    return !isNaN(date.getTime());
   }
 
   function colorTimeBlocks() {
@@ -192,12 +260,12 @@ $(document).ready( function(){
   var timeDisplayEl = $('#time-display');
 
   // handle displaying the time
-  function displayDate() {
-    var date = moment().format('DD MMM YYYY');
-    $(timeDisplayEl).text(date);
+  function displayDate(dateToDisplay) {
+    //var date = moment().format('DD MMM YYYY');
+    $(timeDisplayEl).text(dateToDisplay);
   }
 
-  setInterval(displayDate, 1000);
+  setInterval(displayDate(moment().format('DD MMM YYYY')), 1000);
   setInterval(colorTimeBlocks, 1000);
 
   init();

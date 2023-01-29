@@ -9,7 +9,7 @@ textarea {
   border: none;
   resize: none;
   color: #000000;
-  border-left: 1px solid black;
+  /* border-left: 1px solid black; */
   padding: 10px;
 }
 
@@ -34,13 +34,20 @@ textarea {
   white-space: pre-wrap;
   height: 80px;
   border-top: 1px solid white;
-
 }
 
 .hour {
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
+  /* background-color: #06aed5; */
+  background-color: #06aed5;
+  background-color: rgba(0, 94, 255, 0.416);
   color: #000000;
-  border-top: 1px dashed #000000;
+  /* border-top: 1px dashed #000000; */
+  color: white;
+  font: 900;
+  /* background-color: lightgreen; */
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
 }
 
 .past {
@@ -59,11 +66,21 @@ textarea {
 }
 
 .saveBtn {
-  border-left: 1px solid black;
+  /* border-left: 1px solid black; */
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
   background-color: #06aed5;
   color: white;
+}
+
+#next {
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+#previous {
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
 }
 
 .saveBtn i:hover {
@@ -71,17 +88,14 @@ textarea {
   transition: all 0.3s ease-in-out;
 }
 
-/* .notification {
-  justify-content: space-between;
-  align-items: center;
-} */
-
 .move {
   font-size: 70px;
-  color: #06aed5;
+  /* color: #06aed5; */
   display: flex;
   align-items: center;
   justify-content: center;
+  /* background-color: lightgreen; */
+  color: white;
 }
 
 .move:hover {
@@ -92,6 +106,12 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.notification {
+  /* background-color: #c2d9c2; */
+  border-radius: 15px;
+  background-color: lightgreen;
 }
 
 
