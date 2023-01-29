@@ -84,6 +84,10 @@ textarea {
   justify-content: center;
 }
 
+.move:hover {
+  cursor: pointer;
+}
+
 .storage {
   display: flex;
   align-items: center;

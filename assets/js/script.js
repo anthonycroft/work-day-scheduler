@@ -40,7 +40,7 @@ $(document).ready( function(){
       // get the task description
       taskDesc = tasks[i].event;
 
-      // call function todisplay task
+      // call function to display task
       printTask(hour, taskDesc);
     }
 
@@ -100,6 +100,16 @@ $(document).ready( function(){
     addTaskToLocalStorage(task);
 
   })
+
+  $('.move').click(function(event) {
+    var elementId = $(event.target).attr("id");
+    
+    if (elementId = 'previous') {
+      // load previous day's schedule
+
+    }
+
+  });
 
   function getButton(event) {
     // gets the button in case the icon was clicked, instead of the button
