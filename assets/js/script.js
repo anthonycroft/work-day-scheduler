@@ -174,8 +174,7 @@ $(document).ready( function(){
 
     // Store the updated calendar tasks in local storage
     localStorage.setItem('calendarTasks', JSON.stringify(calendarTasks));
-
-    var $()
+    
   }
 
   function clearSchedule() {
