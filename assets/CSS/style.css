@@ -39,8 +39,10 @@ textarea {
 .hour {
   /* background-color: #ffffff; */
   /* background-color: #06aed5; */
-  background-color: #06aed5;
+  /* background-color: #06aed5; */
   background-color: rgba(0, 94, 255, 0.416);
+
+  background-color:#2a6592;
   color: #000000;
   /* border-top: 1px dashed #000000; */
   color: white;
@@ -69,8 +71,10 @@ textarea {
   /* border-left: 1px solid black; */
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
-  background-color: #06aed5;
+  /* background-color: #06aed5; */
+  background-color:#8ec3eb;
   color: white;
+  background-color: #9bb7d0;
 }
 
 #next {
@@ -111,7 +115,7 @@ textarea {
 .notification {
   /* background-color: #c2d9c2; */
   border-radius: 15px;
-  background-color: lightgreen;
+  background-color: #cddbe7;
 }
 
 
