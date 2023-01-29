@@ -19,6 +19,7 @@ $(document).ready( function(){
     }
 
     updateSchedule(tasks);
+    colorTimeBlocks();
 
     return;
 
@@ -32,13 +33,14 @@ $(document).ready( function(){
       var hour;
       var taskDesc;
 
-      // get the time for this task
+      // get the 2-digit formatted time
       date = tasks[i].date;
       hour = moment(date).format('H');
 
       // get the task description
       taskDesc = tasks[i].event;
 
+      // call function todisplay task
       printTask(hour, taskDesc);
     }
 
@@ -72,7 +74,7 @@ $(document).ready( function(){
     // object in that case)
     button = getButton(event);
 
-    // get the task description by accessing its element
+    // get the task description by accessing associated textarea element
     taskEl = $(button).parent().children().filter("textarea").first();
     taskDesc = $(taskEl).val();
 
@@ -86,7 +88,7 @@ $(document).ready( function(){
     
     // get date and time
     var date = moment().format('YYYY-MM-DD');
-    var hour = getFormattedHour(parentId);
+    var hour = getHourFromId(parentId).concat(":00");
 
     // format the object ready for storing
     var task = {
@@ -109,13 +111,13 @@ $(document).ready( function(){
     }
   }
 
-  function getFormattedHour(id) {
+  function getHourFromId(id) {
     // gets the time of the event from the parent id attribute in format 'HH:00'
 
     if (id.length == 7) {
-      return id.slice(-2) + ":00";
+      return id.slice(-2);
     } else {
-      return id.slice(-1) + ":00";
+      return id.slice(-1);
     }
   }
 
@@ -142,17 +144,53 @@ $(document).ready( function(){
     return;
   }
 
+  function colorTimeBlocks() {
+
+    // iterate over the time-blocks to color them according to whether
+    // they are in the past, present or future
+  
+    var currentHour = moment().hour();
+  
+    // const timeBlockIds = $('.time-block').map(function() {
+    //   return this.id;
+    // }).get();
+  
+    var timeBlockEls = $(".container").find(".row.time-block").get();
+  
+    // iterate over all the time-blocks setting the background appropriately
+    for ( let i = 0; i < timeBlockEls.length; i++) {
+      // get the hour of this time-block
+      var el = $(timeBlockEls[i]);
+      var id = el.attr('id');
+      var hour = getHourFromId(id)
+  
+      if (hour == currentHour ) {
+        $(el).addClass('present');
+      } else if (hour < currentHour ) {
+        $(el).addClass('past');
+      } else {
+        $(el).addClass('future');
+      }
+    }
+  
+  }
+
+  // save reference to important DOM elements
+  var timeDisplayEl = $('#time-display');
+
+  // handle displaying the time
+  function displayTime() {
+    var rightNow = moment().format('DD MMM YYYY');
+    timeDisplayEl.text(rightNow);
+  }
+
+  setInterval(displayTime, 1000);
+  setInterval(colorTimeBlocks, 1000);
+
   init();
 
 })
 
-// save reference to important DOM elements
-var timeDisplayEl = $('#time-display');
 
-// handle displaying the time
-function displayTime() {
-  var rightNow = moment().format('DD MMM YYYY');
-  timeDisplayEl.text(rightNow);
-}
 
-setInterval(displayTime, 1000);
+
