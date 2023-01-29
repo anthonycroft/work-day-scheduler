@@ -30,10 +30,13 @@
       <p id="currentDay" class="lead"></p>
       <h2>Current Time &amp; Date: <br /> <span id="time-display">00:00:00</span></h2>
     </header>
-    <section class="text-center notification" id="notify">
-      Appointment added to <code>localstorage</code>
-    </section>
+
     <div class="container">
+      <section class="row notification" id="notify">
+        <div class="col-md-1 move">&#60;</div>
+        <div class="col-md-10 storage">Appointment added to <code>localstorage</code></div>
+        <div class="col-md-1 move">&#62;</div>
+      </section>
       <!-- Timeblocks go here -->
       <section id="hour-9" class="row time-block">
         <section class="col-md-1 hour">
