@@ -5,6 +5,8 @@ $(document).ready( function(){
   var taskEl;
   var taskDesc;
 
+  $('[data-toggle="tooltip"]').tooltip();
+
   function init() {
     // retrieve items from local storage
 
@@ -61,11 +63,6 @@ $(document).ready( function(){
       notifyNothingToSave();
       return;
     }
-
-    // check if there is nothing to save, if not Return
-    // if (taskDesc == '') {
-    //   return;
-    // }
 
     // get the parent ID so we can tell what hour this is
     parentId = $(button).parent().attr('id');
@@ -161,40 +158,28 @@ $(document).ready( function(){
     var localDate = date.format('YYYY-MM-DD'); // convert date to storage format
 
     // Check if the date exists in calendarTasks
-    if (!calendarTasks[localDate] && taskDescription != '') {
+    if (!calendarTasks[localDate]) {
       calendarTasks[localDate] = [];
     }
 
-    // Check if a task exists for this time, if so update it
+    // Check if a task already exists for this hour, if so update it
     var taskExists = false;
     for (var i = 0; i < calendarTasks[localDate].length; i++) {
       if (calendarTasks[localDate][i].hour === hour) {
-        // Update the task if not blank
-        if (taskDescription != '') {
+          // Update the task 
           calendarTasks[localDate][i].task = taskDescription;
-        } else { // delete existing task
-          calendarTasks[localDate].splice(i,1);
-          // check to see if we no tasks for current date - in which case delete associated object
-          if (calendarTasks[localDate].length == 0) {
-            delete calendarTasks[localDate];
-          } 
         }
         taskExists = true;
         break;
-      }
     }
 
     // Add the new task if not blank
-    if (!taskExists  && (taskDescription != '')) {
+    if (!taskExists) {
       calendarTasks[localDate].push({ hour: hour, task: taskDescription });
     }
 
-    // Store the updated calendar tasks in local storage
-    if (Object.keys(calendarTasks).length != 0) {
-      localStorage.setItem('calendarTasks', JSON.stringify(calendarTasks));
-    }  else {
-      localStorage.removeItem('calendarTasks');
-    }
+    // update local storage
+    updateLocalStorage ('calendarTasks', calendarTasks);
     
     notifySave();
     
@@ -209,6 +194,7 @@ $(document).ready( function(){
 
     // check whether we have anything to delete
     if (!calendarTasks[localDate]) {
+      printTask(hour, '');
       return;
     }
 
@@ -227,18 +213,26 @@ $(document).ready( function(){
       }
     }
 
-    // Store the updated calendar tasks in local storage
-    if (Object.keys(calendarTasks).length != 0) {
-      localStorage.setItem('calendarTasks', JSON.stringify(calendarTasks));
-    }  else {
-      localStorage.removeItem('calendarTasks');
-    }
+    // update local storage
+    updateLocalStorage ('calendarTasks', calendarTasks);
     
     // remove task from display
     printTask(hour, '');
 
     notifyDelete();
     
+  }
+
+  function updateLocalStorage (key, obj) {
+
+    // Store the updated calendar tasks in local storage
+    // delete if empty object
+    if (Object.keys(obj).length != 0) {
+      localStorage.setItem(key, JSON.stringify(obj));
+    }  else {
+      localStorage.removeItem(key);
+    }
+
   }
 
   function clearSchedule() {
