@@ -30,18 +30,15 @@ $(document).ready( function(){
 
   function printTask(hour, taskDesc) { 
     // display task by traversing the DOM 
-    var idToFind;
-    var sectionEl;
-    var textareaEl;
     
     // format the id of the parent element containing the time-block to update
-    idToFind = "hour-".concat(hour);
+    var idToFind = "hour-".concat(hour);
     
     // get the parent element
-    sectionEl = $("section#" + idToFind);
+    var sectionEl = $("section#" + idToFind);
 
     // get the child textarea element
-    textareaEl = $(sectionEl).find("textarea");
+    var textareaEl = $(sectionEl).find("textarea");
 
     // set the value of the textarea element ( = task description )
     $(textareaEl).val(taskDesc);
@@ -90,7 +87,7 @@ $(document).ready( function(){
     
 
     var addOrSubtract = (elementId === 'previous') ? -1 : 1;
-    console.log(addOrSubtract)
+
     // update schedule date to previous week day
     newDate = addWeekdays(scheduleDate, addOrSubtract);
 
@@ -173,7 +170,7 @@ $(document).ready( function(){
     
     $(".storage").html("Appointment added to <code>localstorage</code>");
 
-    // set a timer to remove the text after 5 seconds
+    // set a timer to remove the notification after 5 seconds
     setTimeout(function () {
       $(".storage").html("&nbsp;<code>&nbsp;</code>");
     }, 5000);
@@ -212,9 +209,7 @@ $(document).ready( function(){
   }
   
   // Function to add or subtract a specified number of weekdays to/from the current date
-  function addWeekdays(date, weekdays) {
-    //var date = moment(date, 'YYYY-MM-DD');
-    var daysToAdd = weekdays;
+  function addWeekdays(date, daysToAdd) {
 
     while (daysToAdd !== 0) {
       date = date.add(daysToAdd > 0 ? 1 : -1, 'days');
