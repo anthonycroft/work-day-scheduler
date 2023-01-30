@@ -12,9 +12,9 @@ The user can move between days by clicking the '<' (previous) or '>' (next) icon
 
 Time-blocks are color-coded for ease of reference as follows:
 
-- grey = past time periods
-- red = current time period
-- green = future time periods
+- \textcolor{gray}{grey} = past time periods
+- \textcolor{red}{red} = current time period
+- \textcolor{green}}{green} = future time periods
 
 ## Dependencies
 The app uses the folowing external libraries:
