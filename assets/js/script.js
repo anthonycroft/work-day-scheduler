@@ -57,6 +57,11 @@ $(document).ready( function(){
     taskEl = $(button).parent().children().filter("textarea").first();
     taskDesc = $(taskEl).val().trim();
 
+    if (taskDesc == '') {
+      notifyNothingToSave();
+      return;
+    }
+
     // check if there is nothing to save, if not Return
     // if (taskDesc == '') {
     //   return;
@@ -75,6 +80,32 @@ $(document).ready( function(){
     saveTask(scheduleDate, hour, taskDesc);
 
   })
+
+    // listen for Save button clicks
+    $('.deleteBtn').click( function(event) {
+      var button;
+  
+      // get button clicked (user may have clicked the icon - so we need to get parent 
+      // object in that case)
+      button = getButton(event);
+  
+      // get the task description by accessing associated textarea element
+      taskEl = $(button).parent().children().filter("textarea").first();
+      taskDesc = $(taskEl).val().trim();
+  
+      // get the parent ID so we can tell what hour this is
+      parentId = $(button).parent().attr('id');
+      
+      // get hour from parent
+      var hour = getHourFromId(parentId);
+      
+      // get the date so we can store event
+      var scheduleDate = getScheduleDate();
+  
+      // save event to local storage
+      deleteTask(scheduleDate, hour);
+  
+    })
 
     // listens for click of a move button (navigate to previous or next day)
   $('.move').click(function(event) {
@@ -169,6 +200,47 @@ $(document).ready( function(){
     
   }
 
+  // Function to delete a task
+  function deleteTask(date, hour) {
+    // Retrieve the calendar tasks from local storage
+    var calendarTasks = JSON.parse(localStorage.getItem('calendarTasks')) || {};
+    
+    var localDate = date.format('YYYY-MM-DD'); // convert date to storage format
+
+    // check whether we have anything to delete
+    if (!calendarTasks[localDate]) {
+      return;
+    }
+
+    // Check if a task exists for this time, if so delete it
+    for (var i = 0; i < calendarTasks[localDate].length; i++) {
+      
+      if (calendarTasks[localDate][i].hour === hour) {
+         // delete existing task
+        calendarTasks[localDate].splice(i,1);
+        // check to see if we no tasks for current date - in which case delete associated object
+        if (calendarTasks[localDate].length == 0) {
+          delete calendarTasks[localDate];
+        } 
+        taskExists = true;
+        break;
+      }
+    }
+
+    // Store the updated calendar tasks in local storage
+    if (Object.keys(calendarTasks).length != 0) {
+      localStorage.setItem('calendarTasks', JSON.stringify(calendarTasks));
+    }  else {
+      localStorage.removeItem('calendarTasks');
+    }
+    
+    // remove task from display
+    printTask(hour, '');
+
+    notifyDelete();
+    
+  }
+
   function clearSchedule() {
     // clears all tasks from the displayed date
     $('.description').val('');
@@ -177,13 +249,39 @@ $(document).ready( function(){
   function notifySave () {
     // notifies user that appointment has been saved
     
-    $(".storage").html("Appointment added to <code>localstorage</code>");
+    $(".storage").html("Event added to <code>localstorage</code>");
 
     // set a timer to remove the notification after 5 seconds
+    clearNotification();
+  }
+
+  function notifyDelete () {
+    // notifies user that appointment has been saved
+    
+    $(".storage").html("Event deleted from <code>localstorage</code>");
+
+    // set a timer to remove the notification after 5 seconds
+    clearNotification();
+  }
+
+  function notifyNothingToSave () {
+    // notifies user that appointment has been saved
+    
+    $(".storage").html("Please enter an event description in order to save.");
+
+    // set a timer to remove the notification after 5 seconds
+    clearNotification();
+  }
+
+    // clears the notification area of any message after 4 seconds
+  function clearNotification () {
+
     setTimeout(function () {
       $(".storage").html("&nbsp;<code>&nbsp;</code>");
-    }, 5000);
+    }, 4000);
+  
   }
+
 
     // Function to retrieve and display the tasks for the current day
     // NB Date should be a moment object
@@ -301,10 +399,6 @@ $(document).ready( function(){
       $(el).removeAttr('class').addClass('row time-block future');
     }
   }
-
-  // second.addEventListener ('input', () => {
-  //   third.value = second.value;
-  // });
 
   // save reference to important DOM elements
   var timeDisplayEl = $('#time-display');

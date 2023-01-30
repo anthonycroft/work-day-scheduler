@@ -59,11 +59,22 @@ textarea {
 }
 
 .saveBtn {
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
-  background-color:#8ec3eb;
+  /* border-top-right-radius: 15px; */
+  /* border-bottom-right-radius: 15px; */
+  /* background-color:#8ec3eb; */
   color: white;
   background-color: #9bb7d0;
+  border-right: solid 1px white;
+}
+
+.savebtn, .deleteBtn {
+  color: white;
+}
+
+.deleteBtn {
+  background-color:#6f9fd8;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 
 #next {
