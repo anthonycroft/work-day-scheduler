@@ -21,7 +21,7 @@ $(document).ready( function(){
     }
 
     clearSchedule();
-    displayTasksForCurrentDay(moment());
+    displayTasksForScheduleDay(moment());
     colorTimeBlocks(moment());
 
     return;
@@ -65,27 +65,24 @@ $(document).ready( function(){
     // get the parent ID so we can tell what hour this is
     parentId = $(button).parent().attr('id');
     
-    // get date and time
-
+    // get hour from parent
     var hour = getHourFromId(parentId);
     
-    // format date for storage format (YYYY-MM-DD)
+    // get the date so we can store event
     var scheduleDate = getScheduleDate();
 
-    console.log("Schedule date is: " + scheduleDate);
-
-      // save to local storage
+    // save event to local storage
     saveTask(scheduleDate, hour, taskDesc);
 
   })
 
+    // listens for click of a move button (navigate to previous or next day)
   $('.move').click(function(event) {
     
     var elementId = $(event.target).attr("id");
 
     var scheduleDate = getScheduleDate(); // Returns a Moment object
     
-
     var addOrSubtract = (elementId === 'previous') ? -1 : 1;
 
     // update schedule date to previous week day
@@ -98,7 +95,7 @@ $(document).ready( function(){
     clearSchedule();
 
     // display tasks for resolved date
-    displayTasksForCurrentDay(newDate);
+    displayTasksForScheduleDay(newDate);
 
     // color the timeblocks
     colorTimeBlocks(newDate);
@@ -178,7 +175,7 @@ $(document).ready( function(){
 
     // Function to retrieve and display the tasks for the current day
     // NB Date should be a moment object
-  function displayTasksForCurrentDay(date) {
+  function displayTasksForScheduleDay(date) {
 
     // Retrieve the calendar tasks from local storage
     var calendarTasks = JSON.parse(localStorage.getItem('calendarTasks')) || {};
@@ -221,6 +218,7 @@ $(document).ready( function(){
     return date;
   }
 
+  // checks for a valid date
   function isValidDate(dateString) {
     var date = new Date(dateString);
     return !isNaN(date.getTime());
@@ -296,12 +294,14 @@ $(document).ready( function(){
   var timeDisplayEl = $('#time-display');
 
   // handle displaying the Schedule date - function expects a moment object
-  function displayDate(dateToDisplay) {
+  function displayDate (dateToDisplay) {
     //convert to display format
     $(timeDisplayEl).text(dateToDisplay.format('DD MMM YYYY'));
   }
 
+  // listens for a date change, and updates title
   setInterval(displayDate(moment()), 1000);
+  // colors time-blocks on change of hour
   setInterval(colorTimeBlocks(moment()), 1000);
 
   init();
