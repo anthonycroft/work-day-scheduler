@@ -20,7 +20,7 @@ $(document).ready( function(){
       return
     }
 
-    //clearSchedule();
+    clearSchedule();
     displayTasksForCurrentDay(moment());
     colorTimeBlocks(moment());
 
@@ -83,13 +83,14 @@ $(document).ready( function(){
   })
 
   $('.move').click(function(event) {
-    var addOrSubtract;
+    
     var elementId = $(event.target).attr("id");
 
     var scheduleDate = getScheduleDate(); // Returns a Moment object
     
-    if (elementId === 'previous') {addOrSubtract = -1} else {addOrSubtract = 1}; 
 
+    var addOrSubtract = (elementId === 'previous') ? -1 : 1;
+    console.log(addOrSubtract)
     // update schedule date to previous week day
     newDate = addWeekdays(scheduleDate, addOrSubtract);
 
@@ -157,12 +158,25 @@ $(document).ready( function(){
 
     // Store the updated calendar tasks in local storage
     localStorage.setItem('calendarTasks', JSON.stringify(calendarTasks));
+
+    notifySave();
     
   }
 
   function clearSchedule() {
     // clears all tasks from the displayed date
     $('.description').val('');
+  }
+
+  function notifySave () {
+    // notifies user that appointment has been saved
+    
+    $(".storage").html("Appointment added to <code>localstorage</code>");
+
+    // set a timer to remove the text after 5 seconds
+    setTimeout(function () {
+      $(".storage").html("&nbsp;<code>&nbsp;</code>");
+    }, 5000);
   }
 
     // Function to retrieve and display the tasks for the current day
@@ -234,7 +248,8 @@ $(document).ready( function(){
   }
 
   function colorPresentTimeBlock (timeBlockEls) {
-     // Adds background color to time-block 
+    // calls the relevant function to color the time-blocks, depending om whether 
+    // hour is current, past or in the future.
 
     var currentHour = moment().hour();
 

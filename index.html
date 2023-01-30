@@ -28,13 +28,13 @@
       <h1 class="display-3">Week Day Scheduler</h1>
       <p class="lead">A simple calendar app for scheduling your work day</p>
       <p id="currentDay" class="lead"></p>
-      <h2>Date: <br /> <span id="time-display"></span></h2>
+      <h2>Date: <span id="time-display"></span></h2>
     </header>
 
     <div class="container">
       <section class="row notification" id="notify">
         <div class="col-md-1 move" id="previous">&#60;</div>
-        <div class="col-md-10 storage">Appointment added to <code>localstorage</code></div>
+        <div class="col-md-10 storage" id="save">&nbsp;<code>&nbsp;</code></div>
         <div class="col-md-1 move" id="next">&#62;</div>
       </section>
       <!-- Timeblocks go here -->

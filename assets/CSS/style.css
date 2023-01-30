@@ -98,6 +98,7 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
+  /* color: #cddbe7; */
 }
 
 .notification {
@@ -105,7 +106,5 @@ textarea {
   background-color: #cddbe7;
 }
 
-.hide {
-  display: none;
-}
+
 
