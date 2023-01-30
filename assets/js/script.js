@@ -55,12 +55,12 @@ $(document).ready( function(){
 
     // get the task description by accessing associated textarea element
     taskEl = $(button).parent().children().filter("textarea").first();
-    taskDesc = $(taskEl).val();
+    taskDesc = $(taskEl).val().trim();
 
-    // check if there is anything to save, if not Return
-    if (taskDesc == '') {
-      return;
-    }
+    // check if there is nothing to save, if not Return
+    // if (taskDesc == '') {
+    //   return;
+    // }
 
     // get the parent ID so we can tell what hour this is
     parentId = $(button).parent().attr('id');
@@ -126,33 +126,45 @@ $(document).ready( function(){
   function saveTask(date, hour, taskDescription) {
     // Retrieve the calendar tasks from local storage
     var calendarTasks = JSON.parse(localStorage.getItem('calendarTasks')) || {};
-
+    
     var localDate = date.format('YYYY-MM-DD'); // convert date to storage format
 
-    // Check if the date exists in the calendar tasks
-    if (!calendarTasks[localDate]) {
+    // Check if the date exists in calendarTasks
+    if (!calendarTasks[localDate] && taskDescription != '') {
       calendarTasks[localDate] = [];
     }
 
-    // Check if a task exists for this time
+    // Check if a task exists for this time, if so update it
     var taskExists = false;
     for (var i = 0; i < calendarTasks[localDate].length; i++) {
       if (calendarTasks[localDate][i].hour === hour) {
-        // Update the task
-        calendarTasks[localDate][i].task = taskDescription;
+        // Update the task if not blank
+        if (taskDescription != '') {
+          calendarTasks[localDate][i].task = taskDescription;
+        } else { // delete existing task
+          calendarTasks[localDate].splice(i,1);
+          // check to see if we no tasks for current date - in which case delete associated object
+          if (calendarTasks[localDate].length == 0) {
+            delete calendarTasks[localDate];
+          } 
+        }
         taskExists = true;
         break;
       }
     }
 
-    // If the task does not already exist, add it
-    if (!taskExists) {
+    // Add the new task if not blank
+    if (!taskExists  && (taskDescription != '')) {
       calendarTasks[localDate].push({ hour: hour, task: taskDescription });
     }
 
     // Store the updated calendar tasks in local storage
-    localStorage.setItem('calendarTasks', JSON.stringify(calendarTasks));
-
+    if (Object.keys(calendarTasks).length != 0) {
+      localStorage.setItem('calendarTasks', JSON.stringify(calendarTasks));
+    }  else {
+      localStorage.removeItem('calendarTasks');
+    }
+    
     notifySave();
     
   }
@@ -289,6 +301,10 @@ $(document).ready( function(){
       $(el).removeAttr('class').addClass('row time-block future');
     }
   }
+
+  // second.addEventListener ('input', () => {
+  //   third.value = second.value;
+  // });
 
   // save reference to important DOM elements
   var timeDisplayEl = $('#time-display');
