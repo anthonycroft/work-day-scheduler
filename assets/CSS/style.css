@@ -9,7 +9,6 @@ textarea {
   border: none;
   resize: none;
   color: #000000;
-  /* border-left: 1px solid black; */
   padding: 10px;
 }
 
@@ -37,17 +36,9 @@ textarea {
 }
 
 .hour {
-  /* background-color: #ffffff; */
-  /* background-color: #06aed5; */
-  /* background-color: #06aed5; */
-  background-color: rgba(0, 94, 255, 0.416);
-
   background-color:#2a6592;
-  color: #000000;
-  /* border-top: 1px dashed #000000; */
   color: white;
   font: 900;
-  /* background-color: lightgreen; */
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
 }
@@ -68,10 +59,8 @@ textarea {
 }
 
 .saveBtn {
-  /* border-left: 1px solid black; */
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
-  /* background-color: #06aed5; */
   background-color:#8ec3eb;
   color: white;
   background-color: #9bb7d0;
@@ -94,12 +83,11 @@ textarea {
 
 .move {
   font-size: 70px;
-  /* color: #06aed5; */
   display: flex;
   align-items: center;
   justify-content: center;
-  /* background-color: lightgreen; */
-  color: white;
+  color:#2a6592;
+  background: transparent;
 }
 
 .move:hover {
@@ -113,9 +101,11 @@ textarea {
 }
 
 .notification {
-  /* background-color: #c2d9c2; */
   border-radius: 15px;
   background-color: #cddbe7;
 }
 
+.hide {
+  display: none;
+}
 
