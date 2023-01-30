@@ -11,10 +11,9 @@ Data entered and not saved will be lost once the user navigates away from the cu
 The user can move between days by clicking the '<' (previous) or '>' (next) icons at the top of the diary. Previously stored diary information for the new day is displayed in the relevant time-blocks.
 
 Time-blocks are color-coded for ease of reference as follows:
-
-- \textcolor{gray}{grey} = past time periods
-- \textcolor{red}{red} = current time period
-- \textcolor{green}}{green} = future time periods
+<span style="color:gray">grey </span>= past time periods 
+<span style="color:red">red </span>= current time periods 
+<span style="color:green">green </span>= future time periods 
 
 ## Dependencies
 The app uses the folowing external libraries:
