@@ -1,5 +1,5 @@
 ## work-day-scheduler
-A perpetual week day activity planner.
+A perpetual week day activity scheduler.
 
 ## Description
 The app allows the user to diarise information such as daily tasks or appointments associating them to an hour of the day.
@@ -10,7 +10,7 @@ Data entered and not saved will be lost once the user navigates away from the cu
 
 A user can delete data for any time period by clicking on the *Delete* button positioned at the end of each time-block. A warning is displayed prompting the user to confirm event(s) deletion prior to data being removed.
 
-The user can move between days by clicking the '<' (previous) or '>' (next) icons at the top of the diary. Previously stored diary information for the new day is displayed in the relevant time-blocks.
+The user can move between days by clicking the '<' (previous) or '>' (next) icons at the top of the scheduler. Previously stored schedule information for the new day is displayed in the relevant time-blocks.
 
 Time-blocks are color-coded for ease of reference as follows:
 - grey = past time periods 
@@ -38,3 +38,5 @@ The storage capability of the app is determined by the browser's local storage s
 [Repository](https://github.com/anthonycroft/work-day-scheduler)
 
 ## Screenshots:
+
+![Work Day Scheduler Home Page](https://github.com/anthonycroft/work-day-scheduler/blob/main/assets/images/work-day-scheduler.png))
