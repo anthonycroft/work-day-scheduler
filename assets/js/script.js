@@ -185,8 +185,8 @@ $(document).ready( function(){
       if (calendarTasks[localDate][i].hour === hour) {
           // Update the task 
           calendarTasks[localDate][i].task = taskDescription;
+          taskExists = true;
         }
-        taskExists = true;
         break;
     }
 
