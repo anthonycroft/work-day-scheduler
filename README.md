@@ -8,14 +8,14 @@ Information entered can be stored to the browser's local storage by clicking the
 
 Data entered and not saved will be lost once the user navigates away from the current day (by clicking the previous or next icons - see below) *or* we move past midnight (in the local timezone) thus triggering the app to display the new day.
 
-A user can delete data for any time period by clicking on the *Delete* button positioned at the end of each time-block (next to the *Save* button). A warning is displayed prompting the user to confirm event(s) deletion prior to data being removed.
+A user can delete data for any time period by clicking on the *Delete* button positioned at the end of each time-block (next to the *Save* button). A warning is displayed prompting the user to confirm event(s) deletion prior to data being removed. As with the *Save* button a notfication confirming event(s) deletion is displayed in the notification area above the diary display.
 
 The user can move between days by clicking the '<' (previous) or '>' (next) icons at the top of the scheduler. Previously stored schedule information for the new day is displayed in the relevant time-blocks.
 
 Time-blocks are color-coded for ease of reference as follows:
-- grey = past time periods 
-- red = current time periods 
-- green = future time periods 
+- grey = past time periods
+- red = current time period
+- green = future time periods
 
 ## Dependencies
 The app uses the following external Javascript libraries:
