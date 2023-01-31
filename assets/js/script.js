@@ -5,8 +5,6 @@ $(document).ready( function(){
   var taskEl;
   var taskDesc;
 
-  $('[data-toggle="tooltip"]').tooltip();
-
   function init() {
     // retrieve items from local storage
 
@@ -79,9 +77,16 @@ $(document).ready( function(){
   })
 
     // listen for Save button clicks
-    $('.deleteBtn').click( function(event) {
+    $('.deleteBtn').click( async function(event) {
       var button;
-  
+
+      // confirm that user really wants to delete events for this date
+      let confirmDel = await confirmDelete();
+
+      if (confirmDel == false) {
+        return;
+      }
+
       // get button clicked (user may have clicked the icon - so we need to get parent 
       // object in that case)
       button = getButton(event);
@@ -93,16 +98,28 @@ $(document).ready( function(){
       // get the parent ID so we can tell what hour this is
       parentId = $(button).parent().attr('id');
       
-      // get hour from parent
+      // get hour from parent element
       var hour = getHourFromId(parentId);
       
       // get the date so we can store event
       var scheduleDate = getScheduleDate();
   
-      // save event to local storage
+      // delete event from local storage
       deleteTask(scheduleDate, hour);
   
     })
+
+   const confirmDelete = async () => {
+
+      const result = await Swal.fire({
+        title: 'Confirm Delete',
+        text: 'Are you sure you want to delete event(s) for this date/time?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: `Yes`,
+      });
+      return result.isConfirmed;
+    }
 
     // listens for click of a move button (navigate to previous or next day)
   $('.move').click(function(event) {
@@ -272,10 +289,9 @@ $(document).ready( function(){
 
     setTimeout(function () {
       $(".storage").html("&nbsp;<code>&nbsp;</code>");
-    }, 4000);
+    }, 3000);
   
   }
-
 
     // Function to retrieve and display the tasks for the current day
     // NB Date should be a moment object
@@ -331,11 +347,9 @@ $(document).ready( function(){
   function colorTimeBlocks(date) {
     // calls the relevant function to color the time-blocks, depending om whether 
     // we are on a current, past or future schedule date
-
     var timeBlockEls = $(".container").find(".row.time-block").get();
-
     // check for past or present date
-    if (date > moment().startOf('day')) {
+    if (date > moment().endOf('day')) {
       colorFutureOrPastTimeblocks(timeBlockEls, 'future');
     } else if (date < moment().startOf('day')) {
       colorFutureOrPastTimeblocks(timeBlockEls, 'past');
@@ -404,9 +418,9 @@ $(document).ready( function(){
   }
 
   // listens for a date change, and updates title
-  setInterval(displayDate(moment()), 1000);
+  setInterval(displayDate(moment()), 3000);
   // colors time-blocks on change of hour
-  setInterval(colorTimeBlocks(moment()), 1000);
+  setInterval(colorTimeBlocks(moment()), 3000);
 
   init();
 
