@@ -18,7 +18,7 @@ Time-blocks are color-coded for ease of reference as follows:
 - green = future time periods 
 
 ## Dependencies
-The app uses the folowing external libraries:
+The app uses the folowing external Javascript libraries:
 
 [jQuery](https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js)
 
@@ -31,7 +31,7 @@ The storage capability of the app is determined by the browser's local storage s
 
 ## Deployed Link:
 
-[Work Day Scheduler](https://github.com/anthonycroft/work-day-scheduler/)
+[Work Day Scheduler](https://anthonycroft.github.io/work-day-scheduler/)
 
 ## Repo Link:
 
