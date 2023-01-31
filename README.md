@@ -11,21 +11,23 @@ Data entered and not saved will be lost once the user navigates away from the cu
 The user can move between days by clicking the '<' (previous) or '>' (next) icons at the top of the diary. Previously stored diary information for the new day is displayed in the relevant time-blocks.
 
 Time-blocks are color-coded for ease of reference as follows:
-- <span style="color:gray">grey </span>= past time periods 
-- <span style="color:red">red </span>= current time periods 
-- <span style="color:green">green </span>= future time periods 
+- grey = past time periods 
+- red = current time periods 
+- green = future time periods 
 
 ## Dependencies
 The app uses the folowing external libraries:
 
-- jQuery:     https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js
-- Moment.js:  https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js
+[jQuery](https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js)
+[Moment]https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js
+[Sweetalert2](https://sweetalert2.github.io/)
 
 ## Limitations
 The storage capability of the app is determined by the browser's local storage size. It should be noted that some browsers, particularly older ones, may not permit local data storage; in which case the user may wish to switch to one that does.
 
 ## Deployed Link:
-Javascript Coding Quiz
+
+[Work Day Scheduler](https://github.com/anthonycroft/work-day-scheduler/)
 
 ## Repo Link:
 Repository
